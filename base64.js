@@ -13,6 +13,7 @@
 (function() {
 
 var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	//initalizes a variable called base64EncodeChars
 var base64DecodeChars = new Array(
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -22,16 +23,25 @@ var base64DecodeChars = new Array(
     15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
     -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
     41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
+	//initalizes an array called base64DecodeChars with all these values
 
 function base64encode(str) {
+	//in js, functions are like methods. this is a method that takes in str, based on the following code, I am assuming str is an array
     var out, i, len;
+	//initilizes the variables out, i, and len
     var c1, c2, c3;
+	//initalizes the variables c1, c2, and c3
 
     len = str.length;
+	//sets len to the length of the string array
     i = 0;
+	//sets i equal to zero 
     out = "";
+	//makes out a character
     while(i < len) {
+	    //while length is greater then i this happens, the following stuff increments i so this should get through all the elements of the array
 	c1 = str.charCodeAt(i++) & 0xff;
+	    //
 	if(i == len)
 	{
 	    out += base64EncodeChars.charAt(c1 >> 2);
