@@ -41,13 +41,25 @@ function base64encode(str) {
     while(i < len) {
 	    //while length is greater then i this happens, the following stuff increments i so this should get through all the elements of the array
 	c1 = str.charCodeAt(i++) & 0xff;
-	    //
+	    // sets c1 to the Unicode of the character at the specified index, i, in the string
+	    //& is a bitwise and meaning it expects two numbers and returns a number, if they are not numbers, they are cast into numbers 
+	    //0xff takes only the least significant 8 bits of what's returned by .charCodeAt 
 	if(i == len)
+		//if i equals the length of the str array, this happens (lots of magic concatenating stuff)
 	{
-	    out += base64EncodeChars.charAt(c1 >> 2);
+		//REMEMBER += adds it the the "out" variable, concatanating 
+	    out += base64EncodeChars.charAt(c1 >> 2);		
+		//.charAt returns the value of the string at the specified space
+		// >> is a sign propagating right shift, it shifts the c1 in the binary representation 2 bits to the right, discarding bits shifted off
+		
 	    out += base64EncodeChars.charAt((c1 & 0x3) << 4);
+		//bitwise operation again
+		//remember a bitwise and essentially replaces the value of c1 with the value of 0x3 
+		//<< is a left shift, it shifts c1 in binary representation 0x3 bits to the left, shifting 0s from the right
 	    out += "==";
+		//asigns out to ==
 	    break;
+		//breaks out of the if statement, I'm not sure why this is needed unless I'm misunderstanding an if statement. 
 	}
 	c2 = str.charCodeAt(i++);
 	if(i == len)
