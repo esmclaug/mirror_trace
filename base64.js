@@ -11,7 +11,7 @@
  */
 
 (function() {
-
+//TODO: does this actually decode and encode itself? important to know because bitwise logic (I have never used bitwise stuff before, but I'm loving the challenge of trying to learn it)
 var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 	//initalizes a variable called base64EncodeChars
 var base64DecodeChars = new Array(
@@ -57,22 +57,36 @@ function base64encode(str) {
 		//remember a bitwise and essentially replaces the value of c1 with the value of 0x3 
 		//<< is a left shift, it shifts c1 in binary representation 0x3 bits to the left, shifting 0s from the right
 	    out += "==";
-		//asigns out to ==
+		//adds == to the end of the char out
 	    break;
 		//breaks out of the if statement, I'm not sure why this is needed unless I'm misunderstanding an if statement. 
 	}
 	c2 = str.charCodeAt(i++);
+	    //assigns c2 to the value of str at the Unicode of the character at the specified index, i, in a string.
 	if(i == len)
+		//if i is greater then the length of str, this happens
+		//should continue the origional concating of the out variable
 	{
 	    out += base64EncodeChars.charAt(c1 >> 2);
+		//.charAt returns the value of the string at the specified space
+		// >> is a sign propagating right shift, it shifts the c1 in the binary representation 2 bits to the right, discarding bits shifted off
 	    out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+		// | is a bitwise or and returns a 1 in each bit position for which the corresponding bits of either or both operands are 1s.
+		// 0xF0 is another piece of bitwise number magic. I feel like now is a good time to mention I'm not too familiar with bitwise operations
+		// remember & is a bitwise AND and it esentailly switches the bitwise value with the variable value
 	    out += base64EncodeChars.charAt((c2 & 0xF) << 2);
+		// << is a left shift, it shifts c1 in binary representation 0x3 bits to the left, shifting 0s from the right
+
 	    out += "=";
+		//adds = to the end of the char/string, TODO: need to look to see if it was actually initilizing a char up there 
 	    break;
 	}
 	c3 = str.charCodeAt(i++);
+	    //.charCodeAt returns the Unicode of the character at the specified index in a string
 	out += base64EncodeChars.charAt(c1 >> 2);
+	    //shifts the binary representation of c1 2 bits to the left and continues concating out based on base64EncodeChars, specifically the value located at this index
 	out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+	  
 	out += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6));
 	out += base64EncodeChars.charAt(c3 & 0x3F);
     }
